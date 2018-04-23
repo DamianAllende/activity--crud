@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import request from 'superagent';
 
+import { Link } from 'react-router-dom'
+
 import {
   Table,
   TableBody,
@@ -70,16 +72,20 @@ constructor(){
                       <TableRowColumn>{user.first_name}</TableRowColumn>
                       <TableRowColumn>{user.last_name}</TableRowColumn>
                       <TableRowColumn>
-                        <RaisedButton label="See details" />
+                        <Link to={'/user/' + user.id}>
+                          <RaisedButton label="See details" />
+                        </Link>
                       </TableRowColumn>
                     </TableRow>
                 )
             })}
           </TableBody>
         </Table>
-        <FloatingActionButton style={style}>
-          <ContentAdd />
-        </FloatingActionButton>
+        <Link to={'/newuser'}>
+          <FloatingActionButton style={style}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>  
       </div>
     )
   }
