@@ -32,9 +32,9 @@ class User extends Component {
       request
         .get(`${API_URL}/api/users/${this.props.match.params.id}`)
         .then((data) => {
-        this.setState({
-          user: data.body.data
-        })
+          this.setState({
+            user: data.body.data
+          })
         })
         .catch(function(e){
           console.log(e)
