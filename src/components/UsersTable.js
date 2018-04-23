@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import request from 'superagent';
 
 import {
   Table,
@@ -19,8 +20,36 @@ const style = {
   bottom: 20
 };
 
+
+const API_URL =  'https://reqres.in' 
+
 class UsersTable extends Component {
+
+constructor(){
+  super()
+
+  this.state = {
+    users: []
+  }
+}
+
+
+  componentDidMount() {
+      request
+        .get(`${API_URL}/api/users?per_page=20`)
+        .then((data) => {
+          this.setState({
+            users: data.body.data
+          })
+        })
+        .catch(function(e){
+          console.log(e)
+        })
+   }
+
   render() {
+    console.log(this.state.users)
+    const tabla = this.state.users
     return (
       <div>
         <Table>
@@ -33,34 +62,19 @@ class UsersTable extends Component {
             </TableRow>
           </TableHeader>
           <TableBody>
-            
-            <TableRow>
-              <TableRowColumn>1</TableRowColumn>
-              <TableRowColumn>John</TableRowColumn>
-              <TableRowColumn>Smith</TableRowColumn>
-              <TableRowColumn>
-                <RaisedButton label="See details" />
-              </TableRowColumn>
-            </TableRow>
 
-            <TableRow>
-              <TableRowColumn>1</TableRowColumn>
-              <TableRowColumn>John</TableRowColumn>
-              <TableRowColumn>Smith</TableRowColumn>
-              <TableRowColumn>
-                <RaisedButton label="See details" />
-              </TableRowColumn>
-            </TableRow>
-
-            <TableRow>
-              <TableRowColumn>1</TableRowColumn>
-              <TableRowColumn>John</TableRowColumn>
-              <TableRowColumn>Smith</TableRowColumn>
-              <TableRowColumn>
-                <RaisedButton label="See details" />
-              </TableRowColumn>
-            </TableRow>
-
+           {tabla.map((user) => {
+                return(
+                   <TableRow>
+                      <TableRowColumn>{user.id}</TableRowColumn>
+                      <TableRowColumn>{user.first_name}</TableRowColumn>
+                      <TableRowColumn>{user.last_name}</TableRowColumn>
+                      <TableRowColumn>
+                        <RaisedButton label="See details" />
+                      </TableRowColumn>
+                    </TableRow>
+                )
+            })}
           </TableBody>
         </Table>
         <FloatingActionButton style={style}>

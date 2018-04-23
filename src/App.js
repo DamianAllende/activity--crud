@@ -7,6 +7,7 @@ import User from './components/User'
 import NewUser from './components/NewUser'
 
 class App extends Component {
+	
   render() {
     return (
       <UsersTable />
